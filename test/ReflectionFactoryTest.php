@@ -8,6 +8,7 @@ use Blast\Test\ReflectionFactory\Asset\FooService;
 use Blast\Test\ReflectionFactory\Asset\MissingTypeHint;
 use Blast\Test\ReflectionFactory\Asset\QuxService;
 use PHPUnit_Framework_TestCase;
+use Zend\ServiceManager\Config;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\ServiceManager;
 
@@ -15,7 +16,7 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
 {
     public function testCreatesService()
     {
-        $container = new ServiceManager(
+        $config = new Config(
             [
                 'factories' => [
                     FooService::class => ReflectionFactory::class,
@@ -24,6 +25,8 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
                 ]
             ]
         );
+        $container = new ServiceManager();
+        $config->configureServiceManager($container);
 
         $barSevice = $container->get(BarService::class);
         $this->assertInstanceOf(BarService::class, $barSevice);
@@ -32,7 +35,7 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
     public function testCreatesServiceFromCachedDefinition()
     {
         ReflectionFactory::enableCache(__DIR__ . '/Asset/reflection-factory.cache.php');
-        $container = new ServiceManager(
+        $config = new Config(
             [
                 'factories' => [
                     FooService::class => ReflectionFactory::class,
@@ -41,6 +44,8 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
                 ]
             ]
         );
+        $container = new ServiceManager();
+        $config->configureServiceManager($container);
 
         $barSevice = $container->get(BarService::class);
         $this->assertInstanceOf(BarService::class, $barSevice);
@@ -50,7 +55,7 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
     {
         $cacheFile = tempnam(sys_get_temp_dir(), 'blast');
         ReflectionFactory::enableCache($cacheFile);
-        $container = new ServiceManager(
+        $config = new Config(
             [
                 'factories' => [
                     FooService::class => ReflectionFactory::class,
@@ -59,6 +64,8 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
                 ]
             ]
         );
+        $container = new ServiceManager();
+        $config->configureServiceManager($container);
 
         $barSevice = $container->get(BarService::class);
         $this->assertInstanceOf(BarService::class, $barSevice);
@@ -78,7 +85,7 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testCannotCreateServiceWithoutConstructorTypeHints()
     {
-        $container = new ServiceManager(
+        $config = new Config(
             [
                 'factories' => [
                     FooService::class => ReflectionFactory::class,
@@ -86,6 +93,8 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
                 ]
             ]
         );
+        $container = new ServiceManager();
+        $config->configureServiceManager($container);
 
         $this->expectException(ServiceNotFoundException::class);
         $container->get(MissingTypeHint::class);
@@ -93,7 +102,7 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testCannotCreateServiceWithMissingDependency()
     {
-        $container = new ServiceManager(
+        $config = new Config(
             [
                 'factories' => [
                     BarService::class => ReflectionFactory::class,
@@ -101,6 +110,8 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
                 ]
             ]
         );
+        $container = new ServiceManager();
+        $config->configureServiceManager($container);
 
         $this->expectException(ServiceNotFoundException::class);
         $container->get(BarService::class);

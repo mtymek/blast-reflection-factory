@@ -6,9 +6,8 @@ use Interop\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionParameter;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\Factory\FactoryInterface;
 
-class ReflectionFactory implements FactoryInterface
+class ReflectionFactory
 {
     /** @var array */
     private static $parameterCache = [];
@@ -16,8 +15,13 @@ class ReflectionFactory implements FactoryInterface
     /** @var string */
     private static $cacheFile = null;
 
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, $requestedNameV2 = null)
     {
+        // SMv2?
+        if (!method_exists($container, 'configure')) {
+            $requestedName = $requestedNameV2;
+        }
+
         $parameterTypes = $this->getContructorParameters($container, $requestedName);
 
         $parameters = [];
