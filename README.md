@@ -79,3 +79,9 @@ be a good place to enable this cache.
 `ReflectionFactory` is only meant to be used in typical scenario, when all dependencies
 are injected using constructor. All of them must be type-hinted - otherwise `ReflectionFactory`
 won't be able to resolve them.
+Despite this limitation, this library should still let you reduce number of factories you
+have to write.
+
+What is not supported (and won't be):
+* scalar value injection
+* setter injection
