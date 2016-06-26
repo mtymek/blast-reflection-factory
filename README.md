@@ -40,6 +40,14 @@ services and create new object. `ReflectionFactory` can take care of this use ca
 for you - it uses `Reflection` to scan parameter types in constructor and instantiates
 new object based on this information.
 
+## Installation
+
+Install this package using Composer:
+
+```
+$ composer require mtymek/blast-reflection-factory
+```
+
 ## Usage
 
 After installing this package, all you have to do is to tell ServiceManager
