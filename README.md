@@ -74,7 +74,7 @@ on disk to be reused later:
 
 ```php
 \Blast\ReflectionFactory\ReflectionFactory::enableCache('data/cache/reflection-factory.cache.php');
-``
+```
 
 If you are using Zend Expressive Skeleton Application, then `config/container.php` would
 be a good place to enable this cache.
