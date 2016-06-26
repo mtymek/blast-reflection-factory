@@ -1,7 +1,7 @@
 Blast Reflection Factory
 ========================
 
-Universal factory for Zend ServiceManager.
+Universal auto-wiring factory for Zend ServiceManager.
 
 ## Introduction
 

@@ -1,6 +1,6 @@
 {
     "name": "mtymek/blast-reflection-factory",
-    "description": "Universal factory for Zend ServiceManager",
+    "description": "Universal auto-wiring factory for Zend ServiceManager.",
     "license": "BSD-2-Clause",
     "authors": [
         {
