@@ -35,12 +35,15 @@ class MailerFactory
 
 In typical application, you will end up with multiple factories that simply pull some 
 services and create new object. `ReflectionFactory` can take care of this use case 
-for you. It uses `Reflection` to scan parameter types in constructor and constructs
+for you - it uses `Reflection` to scan parameter types in constructor and instantiates
 new object based on this information.
 
 ## Usage
 
-Use `ReflectionFactory` 
+After installing this package, all you have to do is to tell ServiceManager
+to use `ReflectionFactory` to create your services.
+
+For Zend Expressive application, configuration can look like this:
 
 ```php
 use Blast\ReflectionFactory\ReflectionFactory;
