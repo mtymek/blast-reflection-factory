@@ -1,5 +1,5 @@
-Blast Reflection Factory
-========================
+Blast\ReflectionFactory
+=======================
 
 [![Build Status](https://travis-ci.org/mtymek/blast-reflection-factory.svg?branch=master)](https://travis-ci.org/mtymek/blast-reflection-factory)
 
@@ -78,6 +78,31 @@ on disk to be reused later:
 
 If you are using Zend Expressive Skeleton Application, then `config/container.php` would
 be a good place to enable this cache.
+
+#### Warming-up cache
+
+Cache file is automatically updated when a service is pulled from the container for the first 
+time. This can lead to race conditions when your application is under heavy load. In order to
+avoid it, cache should be warmed up during deployment phase.
+Easiest way to do it is to go through all configured factories, pulling every serice from
+the container.
+
+Example script for applications based on Zend Expressive Skeleton:
+```
+<?php
+// warmup-reflection-factory-cache.php
+
+chdir(dirname(__DIR__));
+require 'vendor/autoload.php';
+
+/** @var \Interop\Container\ContainerInterface $container */
+$container = require 'config/container.php';
+
+$config = require 'config/config.php';
+foreach ($config['dependencies']['factories'] as $type => $factory) {
+    $container->get($type);
+}
+```
 
 ## Limitations
 
