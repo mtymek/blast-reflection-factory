@@ -1,6 +1,8 @@
 Blast Reflection Factory
 ========================
 
+[![Build Status](https://travis-ci.org/mtymek/blast-reflection-factory.svg?branch=master)](https://travis-ci.org/mtymek/blast-reflection-factory)
+
 Universal auto-wiring factory for Zend ServiceManager.
 
 ## Introduction
