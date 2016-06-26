@@ -64,7 +64,7 @@ return [
             // use normal factory for classes that require complex instantiation 
             SmtpMailTransport::class => SmtpMailTransportFactory::class,
              
-            // use ReflectionFactory for auto-wiring auto-wire 
+            // use ReflectionFactory for auto-wiring
             MailRenderer::class => ReflectionFactory::class,
             Mailer::class => ReflectionFactory::class,
         ],
@@ -96,7 +96,8 @@ Easiest way to do it is to go through all configured factories, pulling every se
 the container.
 
 Example script for applications based on Zend Expressive Skeleton:
-```
+
+```php
 <?php
 // warmup-reflection-factory-cache.php
 
