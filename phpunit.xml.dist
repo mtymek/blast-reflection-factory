@@ -1,4 +1,4 @@
-<phpunit bootstrap="./vendor/autoload.php" colors="true">
+<phpunit bootstrap="./vendor/autoload.php" colors="true" backupStaticAttributes="true">
     <testsuites>
         <testsuite name="Blast\\Test\\ReflectionFactory">
             <directory>./test</directory>

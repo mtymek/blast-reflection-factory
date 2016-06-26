@@ -10,33 +10,72 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 
 class ReflectionFactory implements FactoryInterface
 {
+    /** @var array */
+    private static $parameterCache = [];
+
+    /** @var string */
+    private static $cacheFile = null;
+
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $reflectionClass = new ReflectionClass($requestedName);
-        if (null === ($constructor = $reflectionClass->getConstructor())) {
-            return new $requestedName();
+        $parameterTypes = $this->getContructorParameters($container, $requestedName);
+
+        $parameters = [];
+        foreach ($parameterTypes as $type) {
+            $parameters[] = $container->get($type);
         }
-        $reflectionParameters = $constructor->getParameters();
-        if (empty($reflectionParameters)) {
-            return new $requestedName();
-        }
-        $parameters = array_map(
-            $this->resolveParameter($container, $requestedName),
-            $reflectionParameters
-        );
+
         return new $requestedName(...$parameters);
     }
 
     /**
-     * Resolve a parameter to a value.
-     *
-     * Returns a callback for resolving a parameter to a value.
-     *
-     * @param ContainerInterface $container
-     * @param string $requestedName
-     * @return callable
+     * @param string $cacheFile
      */
-    private function resolveParameter(ContainerInterface $container, $requestedName)
+    public static function enableCache($cacheFile)
+    {
+        self::$cacheFile = $cacheFile;
+        self::$parameterCache = [];
+
+        if (file_exists(self::$cacheFile)) {
+            $cached = include self::$cacheFile;
+            if (is_array($cached)) {
+                self::$parameterCache = $cached;
+            }
+        }
+    }
+
+    private function getContructorParameters(ContainerInterface $container, $requestedName)
+    {
+        if (isset(self::$parameterCache[$requestedName])) {
+            return self::$parameterCache[$requestedName];
+        }
+
+        self::$parameterCache[$requestedName] = $this->reflectConstructorParams($container, $requestedName);
+        if (null !== self::$cacheFile) {
+            file_put_contents(self::$cacheFile, '<?php return ' . var_export(self::$parameterCache, true) . ";\n");
+        }
+
+        return self::$parameterCache[$requestedName];
+    }
+
+    private function reflectConstructorParams(ContainerInterface $container, $requestedName)
+    {
+        $reflectionClass = new ReflectionClass($requestedName);
+        if (null === ($constructor = $reflectionClass->getConstructor())) {
+            return [];
+        }
+        $reflectionParameters = $constructor->getParameters();
+        if (empty($reflectionParameters)) {
+            return [];
+        }
+        $parameters = array_map(
+            $this->resolveParameterType($container, $requestedName),
+            $reflectionParameters
+        );
+        return $parameters;
+    }
+
+    private function resolveParameterType(ContainerInterface $container, $requestedName)
     {
         /**
          * @param ReflectionParameter $parameter
@@ -62,7 +101,7 @@ class ReflectionFactory implements FactoryInterface
                     $type
                 ));
             }
-            return $container->get($type);
+            return $type;
         };
     }
 }

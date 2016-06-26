@@ -28,7 +28,54 @@ class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
         $barSevice = $container->get(BarService::class);
         $this->assertInstanceOf(BarService::class, $barSevice);
     }
-    
+
+    public function testCreatesServiceFromCachedDefinition()
+    {
+        ReflectionFactory::enableCache(__DIR__ . '/Asset/reflection-factory.cache.php');
+        $container = new ServiceManager(
+            [
+                'factories' => [
+                    FooService::class => ReflectionFactory::class,
+                    BarService::class => ReflectionFactory::class,
+                    QuxService::class => ReflectionFactory::class,
+                ]
+            ]
+        );
+
+        $barSevice = $container->get(BarService::class);
+        $this->assertInstanceOf(BarService::class, $barSevice);
+    }
+
+    public function testGeneratesNewCache()
+    {
+        $cacheFile = tempnam(sys_get_temp_dir(), 'blast');
+        ReflectionFactory::enableCache($cacheFile);
+        $container = new ServiceManager(
+            [
+                'factories' => [
+                    FooService::class => ReflectionFactory::class,
+                    BarService::class => ReflectionFactory::class,
+                    QuxService::class => ReflectionFactory::class,
+                ]
+            ]
+        );
+
+        $barSevice = $container->get(BarService::class);
+        $this->assertInstanceOf(BarService::class, $barSevice);
+        $cachedDefinitions = include $cacheFile;
+        $this->assertEquals(
+            [
+                FooService::class,
+                QuxService::class,
+            ],
+            $cachedDefinitions[BarService::class]
+        );
+        $this->assertEquals([], $cachedDefinitions[FooService::class]);
+        $this->assertEquals([], $cachedDefinitions[QuxService::class]);
+
+        unlink($cacheFile);
+    }
+
     public function testCannotCreateServiceWithoutConstructorTypeHints()
     {
         $container = new ServiceManager(
