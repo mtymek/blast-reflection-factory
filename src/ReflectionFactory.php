@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blast\ReflectionFactory;
 
 use Interop\Container\ContainerInterface;
@@ -15,14 +17,9 @@ class ReflectionFactory
     /** @var string */
     private static $cacheFile = null;
 
-    public function __invoke(ContainerInterface $container, $requestedName, $requestedNameV2 = null)
+    public function __invoke(ContainerInterface $container, string $requestedName)
     {
-        // SMv2?
-        if (!method_exists($container, 'configure')) {
-            $requestedName = $requestedNameV2;
-        }
-
-        $parameterTypes = $this->getContructorParameters($container, $requestedName);
+        $parameterTypes = $this->getConstructorParameters($container, $requestedName);
 
         $parameters = [];
         foreach ($parameterTypes as $type) {
@@ -32,10 +29,7 @@ class ReflectionFactory
         return new $requestedName(...$parameters);
     }
 
-    /**
-     * @param string $cacheFile
-     */
-    public static function enableCache($cacheFile)
+    public static function enableCache(string $cacheFile): void
     {
         self::$cacheFile = $cacheFile;
         self::$parameterCache = [];
@@ -48,7 +42,7 @@ class ReflectionFactory
         }
     }
 
-    private function getContructorParameters(ContainerInterface $container, $requestedName)
+    private function getConstructorParameters(ContainerInterface $container, string $requestedName): array
     {
         if (isset(self::$parameterCache[$requestedName])) {
             return self::$parameterCache[$requestedName];
@@ -62,7 +56,7 @@ class ReflectionFactory
         return self::$parameterCache[$requestedName];
     }
 
-    private function reflectConstructorParams(ContainerInterface $container, $requestedName)
+    private function reflectConstructorParams(ContainerInterface $container, string $requestedName): array
     {
         $reflectionClass = new ReflectionClass($requestedName);
         if (null === ($constructor = $reflectionClass->getConstructor())) {
@@ -79,11 +73,9 @@ class ReflectionFactory
         return $parameters;
     }
 
-    private function resolveParameterType(ContainerInterface $container, $requestedName)
+    private function resolveParameterType(ContainerInterface $container, string $requestedName)
     {
         /**
-         * @param ReflectionParameter $parameter
-         * @return mixed
          * @throws ServiceNotFoundException If type-hinted parameter cannot be
          *   resolved to a service in the container.
          */
