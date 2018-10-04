@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blast\Test\ReflectionFactory;
 
 use Blast\ReflectionFactory\ReflectionFactory;
@@ -7,12 +9,12 @@ use Blast\Test\ReflectionFactory\Asset\BarService;
 use Blast\Test\ReflectionFactory\Asset\FooService;
 use Blast\Test\ReflectionFactory\Asset\MissingTypeHint;
 use Blast\Test\ReflectionFactory\Asset\QuxService;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Zend\ServiceManager\Config;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\ServiceManager;
 
-class ReflectionFactoryTest extends PHPUnit_Framework_TestCase
+class ReflectionFactoryTest extends TestCase
 {
     public function testCreatesService()
     {
