@@ -1,6 +1,6 @@
 # Changelog
 
-# 1.0 - 2018-1004
+# 1.0 - 2018-10-04
 * Drop PHP 5 and PHP 7.0 support 
 * Strict types
 * Upgrade PHPUnit to v7
