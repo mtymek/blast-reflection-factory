@@ -4,6 +4,7 @@
 * Move from ZF to Laminas
 * Add support for PHPv8, drop support for v7.3
 * Move to PHPUnit v9.1+
+* Move from Travis CI to GitHub Actions
 
 # 1.0 - 2018-10-04
 * Drop PHP 5 and PHP 7.0 support 
