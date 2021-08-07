@@ -10,9 +10,9 @@ use Blast\Test\ReflectionFactory\Asset\FooService;
 use Blast\Test\ReflectionFactory\Asset\MissingTypeHint;
 use Blast\Test\ReflectionFactory\Asset\QuxService;
 use PHPUnit\Framework\TestCase;
-use Zend\ServiceManager\Config;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\Config;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\ServiceManager;
 
 class ReflectionFactoryTest extends TestCase
 {
