@@ -80,24 +80,35 @@ class ReflectionFactory
          *   resolved to a service in the container.
          */
         return function (ReflectionParameter $parameter) use ($container, $requestedName) {
-            if (! $parameter->getClass()) {
+            if (! $parameter->getType()) {
                 throw new ServiceNotFoundException(sprintf(
                     'Cannot create "%s"; parameter "%s" has no type hint.',
                     $requestedName,
                     $parameter->getName()
                 ));
             }
-            $type = $parameter->getClass()->getName();
 
-            if (! $container->has($type)) {
+            $name = $parameter->getType() && !$parameter->getType()->isBuiltin()
+               ? $parameter->getType()->getName()
+                : null;
+
+            if (! $name) {
+                throw new ServiceNotFoundException(sprintf(
+                    'Cannot create "%s"; parameter "%s" is a built-in type.',
+                    $requestedName,
+                    $parameter->getName()
+                ));
+            }
+
+            if (! $container->has($name)) {
                 throw new ServiceNotFoundException(sprintf(
                     'Cannot create "%s"; unable to resolve parameter "%s" using type hint "%s"',
                     $requestedName,
                     $parameter->getName(),
-                    $type
+                    $name
                 ));
             }
-            return $type;
+            return $name;
         };
     }
 }

@@ -1,2 +1,3 @@
-.idea
-vendor
+/.idea
+/.phpunit.result.cache
+/vendor

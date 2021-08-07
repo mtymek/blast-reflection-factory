@@ -18,4 +18,6 @@
     <!-- Paths to check -->
     <file>src</file>
     <file>test</file>
+    <exclude-pattern>test/Asset/reflection-factory.cache.php</exclude-pattern>
+
 </ruleset>

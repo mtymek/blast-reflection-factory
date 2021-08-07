@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": "^7.4 || ~8.0",
-        "laminas/laminas-servicemanager": "^3.1"
+        "laminas/laminas-servicemanager": "^3.3"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.3",
