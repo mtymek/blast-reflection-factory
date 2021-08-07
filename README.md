@@ -1,13 +1,13 @@
 Blast\ReflectionFactory
 =======================
 
-[![Build Status](https://travis-ci.org/mtymek/blast-reflection-factory.svg?branch=master)](https://travis-ci.org/mtymek/blast-reflection-factory)
+[![Build Status](https://github.com/mtymek/blast-reflection-factory/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/mtymek/blast-reflection-factory/actions/workflows/continuous-integration.yml)
 
-Universal auto-wiring factory for Zend ServiceManager.
+Universal auto-wiring factory for Laminas ServiceManager.
 
 ## Introduction
 
-Writing factories for Zend ServiceManager can be boring, repeatable task. Typical service
+Writing factories for Laminas ServiceManager can be boring, repeatable task. Typical service
 will consume one or more dependencies using constructor injection: 
 
 ```php
@@ -53,7 +53,7 @@ $ composer require mtymek/blast-reflection-factory
 After installing this package, all you have to do is to tell ServiceManager
 to use `ReflectionFactory` to create your services.
 
-For Zend Expressive application, configuration can look like this:
+For Laminas Mezzio application, configuration can look like this:
 
 ```php
 use Blast\ReflectionFactory\ReflectionFactory;
@@ -92,10 +92,10 @@ be a good place to enable this cache.
 Cache file is automatically updated when a service is pulled from the container for the first 
 time. This can lead to race conditions when your application is under heavy load. In order to
 avoid it, cache should be warmed up during deployment phase.
-Easiest way to do it is to go through all configured factories, pulling every serice from
+The easiest way to do it is to go through all configured factories, pulling every service from
 the container.
 
-Example script for applications based on Zend Expressive Skeleton:
+Example script for applications based on Mezzio Skeleton:
 
 ```php
 <?php

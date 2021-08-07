@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Blast\ReflectionFactory;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionParameter;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 
 class ReflectionFactory
 {
