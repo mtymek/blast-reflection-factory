@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
+  <file src="src/ReflectionFactory.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$requestedName</code>
+    </ArgumentTypeCoercion>
+    <InvalidStringClass occurrences="1">
+      <code>new $requestedName(...$parameters)</code>
+    </InvalidStringClass>
+    <MissingReturnType occurrences="1">
+      <code>resolveParameterType</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="3">
+      <code>$name</code>
+      <code>$this-&gt;resolveParameterType($container, $requestedName)</code>
+      <code>$type</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="4">
+      <code>$cached</code>
+      <code>$name</code>
+      <code>$parameters[]</code>
+      <code>$type</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>self::$parameterCache[$requestedName]</code>
+    </MixedReturnStatement>
+    <RedundantCondition occurrences="1">
+      <code>$parameter-&gt;getType()</code>
+    </RedundantCondition>
+    <UndefinedMethod occurrences="1">
+      <code>getName</code>
+    </UndefinedMethod>
+  </file>
+  <file src="test/ReflectionFactoryTest.php">
+    <MissingReturnType occurrences="5">
+      <code>testCannotCreateServiceWithMissingDependency</code>
+      <code>testCannotCreateServiceWithoutConstructorTypeHints</code>
+      <code>testCreatesService</code>
+      <code>testCreatesServiceFromCachedDefinition</code>
+      <code>testGeneratesNewCache</code>
+    </MissingReturnType>
+    <MixedArrayAccess occurrences="3">
+      <code>$cachedDefinitions[BarService::class]</code>
+      <code>$cachedDefinitions[FooService::class]</code>
+      <code>$cachedDefinitions[QuxService::class]</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="1">
+      <code>$cachedDefinitions</code>
+    </MixedAssignment>
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>ReflectionFactoryTest</code>
+      <code>ReflectionFactoryTest</code>
+    </PropertyNotSetInConstructor>
+    <UnresolvableInclude occurrences="1">
+      <code>include $cacheFile</code>
+    </UnresolvableInclude>
+  </file>
+</files>
