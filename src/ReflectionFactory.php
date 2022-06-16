@@ -11,11 +11,9 @@ use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 
 class ReflectionFactory
 {
-    /** @var array */
-    private static $parameterCache = [];
+    private static array $parameterCache = [];
 
-    /** @var string */
-    private static $cacheFile = null;
+    private static ?string $cacheFile = null;
 
     public function __invoke(ContainerInterface $container, string $requestedName)
     {
