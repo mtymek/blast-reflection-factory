@@ -8,6 +8,7 @@ use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionParameter;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Webimpress\SafeWriter\FileWriter;
 
 class ReflectionFactory
 {
@@ -48,7 +49,7 @@ class ReflectionFactory
 
         self::$parameterCache[$requestedName] = $this->reflectConstructorParams($container, $requestedName);
         if (null !== self::$cacheFile) {
-            file_put_contents(self::$cacheFile, '<?php return ' . var_export(self::$parameterCache, true) . ";\n");
+            FileWriter::writeFile(self::$cacheFile, '<?php return ' . var_export(self::$parameterCache, true) . ";\n");
         }
 
         return self::$parameterCache[$requestedName];

@@ -1,5 +1,9 @@
 # Changelog
 
+# 2.1 - 2022-06-16
+* Add support for PHP 8.1
+* Add support for safe file write
+
 # 2.0 - 2021-08-07
 * Move from ZF to Laminas
 * Add support for PHPv8, drop support for v7.3
