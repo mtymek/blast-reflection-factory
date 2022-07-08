@@ -1,6 +1,6 @@
 # Changelog
 
-# 2.1 - 2022-06-16
+# 2.1 - 2022-07-08
 * Add support for PHP 8.1
 * Add support for safe file write
 
